@@ -1,8 +1,9 @@
-import 'ipld'
+'use strict'
+var ipld= require('ipld')
 
-var _cache = new WeakMap()
-export class transaction {
-  constructor (contract, creditor, debitor, amount, items, private) {
+let _cache = new WeakMap()
+module.exports= class transaction {
+  constructor (contract, creditor, debitor, amount, items, hidden) {
     if (contract) {
       if (typeof contract === 'object') { // set properties with JSON Object
         if (contract.contract){
@@ -26,7 +27,7 @@ export class transaction {
           throw new Error("Invalid Creditor")
         }
         this.items = contract.items || []
-        this.private= contract.privacy
+        this.hidden= contract.hidden
       } else{  //Set properties directly
         if (contract){
           this.contract = contract
@@ -49,7 +50,7 @@ export class transaction {
           throw new Error("Invalid Amount")
         }
         this.items = contract.items || []
-        this.private= contract.privacy || false
+        this.hidden= contract.hidden || false
 
       }
     }
@@ -60,14 +61,14 @@ export class transaction {
      creditor: this.creditor,
      amount: this.amount,
      items: this.items,
-     private: this.private,
+     hidden: this.hidden
    }
-    marsh = ipld.marshal(tran)
+   let marsh = ipld.marshal(tran)
     _cache.set(this, ipld.multihash(marsh))
    return marsh
   }
   multihash(){
-    var mh =_cache.get(this)
+    let mh =_cache.get(this)
     if(!mh){
       this.marshal()
       mh= _cache.get(this)

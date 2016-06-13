@@ -9,6 +9,11 @@
   "author": "Vijayee Kulkaa <vijayee.kulkaa@hushmail.com>",
   "license": "GPL3",
   "dependencies": {
+    "ipfs-ipld": "^2.0.0",
     "ipld": "^0.6.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
   }
 }
