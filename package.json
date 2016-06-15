@@ -9,11 +9,15 @@
   "author": "Vijayee Kulkaa <vijayee.kulkaa@hushmail.com>",
   "license": "GPL3",
   "dependencies": {
+    "ipfs-block-service": "^0.4.0",
     "ipfs-ipld": "^2.0.0",
-    "ipld": "^0.6.0"
+    "ipld": "^0.6.0",
+    "promisify-node": "^0.4.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "fs-blob-store": "^5.2.1",
+    "ipfs-repo": "^0.8.0",
     "mocha": "^2.5.3"
   }
 }

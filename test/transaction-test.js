@@ -2,16 +2,17 @@ var expect = require('chai').expect
 var Transaction = require('../src/transaction')
 
 
-describe('test transaction', () => {
+describe("test transaction", () => {
   var contract = "QmQtX5JVbRa25LmQ1LHFChkXWW5GaWrp7JpymN4oPuBSmL"
   var creditor = "QmQtX5JVbRa25LmQ1LHFChkXWW5GaWrp7JpymN4oPuBS23"
   var debitor = "QmQtX5JVbRa25LmQ1LHFChkXWW5GaWrp7JpymN4oPuBS09"
   var amount = 1800
   var items = []
   var hidden= false
+  var time= new Date()
 
-  it('transaction creation', () => {
-    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
+  it("transaction creation", () => {
+    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden, time)
     expect(trans).to.exist
     expect(trans.contract).to.eql(contract)
     expect(trans.creditor).to.eql(creditor)
@@ -22,8 +23,8 @@ describe('test transaction', () => {
     expect(trans.multihash()).to.eql('QmaYMM4zExZFsgaFAX2stMNAStGpPMhherECoZEuvMf7Xg')
   })
 
-  it('transaction creation from json', () => {
-    var trans= new Transaction({contract: contract, creditor: creditor, debitor: debitor, amount: amount, items: items, hidden: hidden})
+  it("transaction creation from json", () => {
+    var trans= new Transaction({contract: contract, creditor: creditor, debitor: debitor, amount: amount, items: items, hidden: hidden, time: time})
     expect(trans).to.exist
     expect(trans.contract).to.eql(contract)
     expect(trans.creditor).to.eql(creditor)
