@@ -28,6 +28,8 @@ var bs =  new BlockService(repo)
 var is= new IPLDService(bs)
 var ts= new TransactionService(is)
 var es = new EntryService(is)
+
+/*
 es.add(entry).then((hash)=> {
   console.log("Added: " + hash)
   es.add(entry2).then((hash)=>{
@@ -48,11 +50,13 @@ es.get(entry2.multihash()).then((entry)=>{
   }).catch((err)=> console.log(err))
 
 }).catch((err)=> console.log(err))
+*/
 
-
-console.log(trans.multihash())
+//console.log(trans.multihash())
 console.log(entry.multihash())
+/*
 console.log(ipld.unmarshal(entry.marshal()))
 ts.add(trans).then((hash)=> console.log(hash)).catch((err)=> console.log(err))
 ts.add(trans2).then((hash)=> console.log(hash)).catch((err)=> console.log(err))
 ts.get(trans.multihash()).then((transaction)=> console.log(transaction.multihash())).catch((err)=> console.log(err))
+  */

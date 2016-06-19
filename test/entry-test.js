@@ -10,13 +10,14 @@ describe("test entry", () => {
   var items = []
   var hidden= false
   var time= new Date("06/14/1997")
+  var time2 = new Date("06/14/2008")
   it("test entry creation", ()=>{
     var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
     var entry= new Entry(trans, time)
     expect(entry).to.exist
     expect(entry.transaction).to.exist
     expect(entry.id).to.eql(1)
-    expect(entry.multihash()).to.eql("QmYr7N9yBRPEiBUHy6M4msM6s2xauxsC7uDAbnpo49ptau")
+    expect(entry.multihash()).to.eql("QmdLSrNnKDNTwQfxhYcX3SrSzycpSY8muF7mDzJEmDbGM1")
   })
   it("test linking entries",()=>{
     var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
@@ -24,6 +25,26 @@ describe("test entry", () => {
     var trans2= new Transaction(contract, debitor, creditor, amount, items, hidden)
     var entry2= new Entry({transaction:trans2, time: time2, last: entry})
     var entry3= new Entry({transaction:trans2, time: time2})
+    expect(entry2.multihash()).to.not.equal(entry3.multihash())
+    entry2.last()
+      .then((ntry)=>{
+        expect(ntry.multihash()).to.eql(entry.multihash())
+
+      })
+    .catch((err)=>{
+      throw(err)
+    })
+  })
+  it("test past entries",()=>{
+    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
+    var entry= new Entry(trans, time2)
+    var trans2= new Transaction(contract, debitor, creditor, amount, items, hidden)
+    try{
+      var entry2= new Entry({transaction:trans2, time: time, last: entry})
+    }
+    catch(err){
+      expect(err).to.exist
+    }
   })
   
 })
