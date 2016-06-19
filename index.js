@@ -43,7 +43,6 @@ var es = new EntryService(is)
  console.log(entry)
  }, 3000)
 
-
  entry.last().then((entry)=>{
  console.log('Last: ' + entry.multihash())
  }).catch((err)=> console.log(err))
@@ -51,7 +50,7 @@ var es = new EntryService(is)
  }).catch((err)=> console.log(err))
  */
 
-//console.log(trans.multihash())
+// console.log(trans.multihash())
 console.log(entry.multihash())
 /*
  console.log(ipld.unmarshal(entry.marshal()))

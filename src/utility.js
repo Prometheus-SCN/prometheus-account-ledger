@@ -32,7 +32,7 @@ utility.isTransaction = (transaction) => {
 }
 
 utility.isEntry = (entry) => {
-  if(!entry){
+  if (!entry) {
     return false
   }
   if (!utility.isTransaction(entry.transaction)) {
@@ -52,7 +52,7 @@ utility.isEntry = (entry) => {
 
 utility.isIPLDLink = (link) => {
 
-  if (link && link[ "/" ] != null && typeof link[ "/" ] === "string") {
+  if (link && link[ '/' ] != null && typeof link[ '/' ] === 'string') {
     return true
   } else {
     return false
@@ -60,10 +60,8 @@ utility.isIPLDLink = (link) => {
 }
 
 utility.unmarshalTransaction = (transaction) => {
-
 }
 utility.unmarshalEntry = (entry) => {
-
 }
 
 module.exports = utility

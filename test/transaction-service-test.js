@@ -19,19 +19,18 @@ describe('test transaction service', () => {
   var is = new IPLDService(bs)
   it('transaction-service add', () => {
     var ts = new TransactionService(is)
-    ts.add(trans).then((transaction)=> {
+    ts.add(trans).then((transaction) => {
       expect(transaction.multihash()).to.eql('QmdkdjUBSkAnLCUtAVruKcuypTXgxoNY9jG62AHWVMLz2y')
-    }, (err)=> {
+    }, (err) => {
       expect(err).to.not.exist
     })
   })
   it('transaction-service get', () => {
     var ts = new TransactionService(bs)
-    ts.get(trans.multihash()).then((transaction)=> {
+    ts.get(trans.multihash()).then((transaction) => {
       expect(transaction.multihash()).to.eql('QmdkdjUBSkAnLCUtAVruKcuypTXgxoNY9jG62AHWVMLz2y')
-    }, (err)=> {
+    }, (err) => {
       expect(err).to.not.exist
     })
   })
-
 })
