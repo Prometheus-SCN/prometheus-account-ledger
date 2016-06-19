@@ -18,5 +18,12 @@ describe("test entry", () => {
     expect(entry.id).to.eql(1)
     expect(entry.multihash()).to.eql("QmYr7N9yBRPEiBUHy6M4msM6s2xauxsC7uDAbnpo49ptau")
   })
+  it("test linking entries",()=>{
+    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
+    var entry= new Entry(trans, time)
+    var trans2= new Transaction(contract, debitor, creditor, amount, items, hidden)
+    var entry2= new Entry({transaction:trans2, time: time2, last: entry})
+    var entry3= new Entry({transaction:trans2, time: time2})
+  })
   
 })

@@ -19,7 +19,6 @@ var time = new Date("06/14/1997")
 var time2 = new Date("06/14/2008")
 
 var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
-console.log(utility.isTransaction(trans))
 var entry= new Entry(trans, time)
 var trans2= new Transaction(contract, debitor, creditor, amount, items, hidden)
 var entry2= new Entry({transaction:trans2, time: time2, last: entry})
@@ -36,8 +35,13 @@ es.add(entry).then((hash)=> {
   }).catch((err)=> console.log(err))
 }).catch((err)=> console.log(err))
 
+console.log("Entry2: ")
+console.log(entry2)
 es.get(entry2.multihash()).then((entry)=>{
-  console.log("Retrieved: " +entry.multihash())
+ setTimeout(()=>{
+   console.log(entry)
+ }, 3000)
+
 
   entry.last().then((entry)=>{
     console.log("Last: " + entry.multihash())

@@ -61,10 +61,11 @@ module.exports = class entry {
       let isIPLDLink = utility.isIPLDLink(last)
       if (isIPLDLink) {
         _last.set(this, last)
+        this.id = id
       } else {
         if (isEntry || isString) {
           _last.set(this, last)
-          this.id = isEntry ? last.id++ : id || 1
+          this.id = isEntry ? (last.id + 1) : (id || 1)
         } else {
           throw new Error("Invalid Last Entry")
         }
@@ -73,7 +74,7 @@ module.exports = class entry {
         }
       }
     } else {
-      this.id = id || 1;
+      this.id = id || 1
     }
 
   }
