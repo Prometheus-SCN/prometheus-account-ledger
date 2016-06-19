@@ -2,6 +2,7 @@ const expect = require('chai').expect
 const Transaction = require('../src/transaction')
 const TransactionService = require('../src/transaction-service')
 const BlockService = require('ipfs-block-service')
+const IPLDService = require('ipfs-ipld').IPLDService
 const IPFSRepo = require('ipfs-repo')
 const fsb = require('fs-blob-store')
 
@@ -14,28 +15,26 @@ describe("test transaction service", () => {
   var items = []
   var hidden= false
   var time= new Date()
-  var trans= new Transaction(contract, creditor, debitor, amount, items, hidden, time)
+  var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
   var repo = new IPFSRepo('./.repo', {stores: fsb})
   var bs =  new BlockService(repo)
-  it("transaction-service creation", () => {
-    var ts= new TransactionService(bs)
-    ts.add(trans).then((hash)=>{
-      
+  var is= new IPLDService(bs)
+  it("transaction-service add", () => {
+    var ts= new TransactionService(is)
+    ts.add(trans).then((transaction)=>{
+      expect(transaction.multihash()).to.eql('QmdkdjUBSkAnLCUtAVruKcuypTXgxoNY9jG62AHWVMLz2y')
     },(err)=>{
-      expect(trans).to.not.exist
+      expect(err).to.not.exist
     })
-
-
-    expect(trans).to.exist
-    expect(trans.contract).to.eql(contract)
-    expect(trans.creditor).to.eql(creditor)
-    expect(trans.debitor).to.eql(debitor)
-    expect(trans.amount).to.eql(amount)
-    expect(trans.items).to.eql(items)
-    expect(trans.hidden).to.eql(hidden)
-    expect(trans.multihash()).to.eql('QmaYMM4zExZFsgaFAX2stMNAStGpPMhherECoZEuvMf7Xg')
   })
-
+  it("transaction-service get", () => {
+    var ts= new TransactionService(bs)
+    ts.get(trans.multihash()).then((transaction)=>{
+      expect(transaction.multihash()).to.eql('QmdkdjUBSkAnLCUtAVruKcuypTXgxoNY9jG62AHWVMLz2y')
+    },(err)=>{
+      expect(err).to.not.exist
+    })
+  })
 
 
 })

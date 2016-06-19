@@ -3,7 +3,7 @@ const ipld = require('ipld')
 
 let _cache = new WeakMap()
 module.exports = class transaction {
-  constructor (contract, creditor, debitor, amount, items, hidden, time) {
+  constructor (contract, creditor, debitor, amount, items, hidden) {
     if (contract) {
       if (typeof contract === 'object') { // set properties with JSON Object
         if (contract.contract) {
@@ -28,11 +28,7 @@ module.exports = class transaction {
         }
         this.items = contract.items || []
         this.hidden = contract.hidden
-        if (contract.time && contract.time instanceof Date) {
-          this.time = contract.time
-        } else {
-          throw new Error("Invalid Time")
-        }
+
       } else {  //Set properties directly
         if (contract) {
           this.contract = contract
@@ -56,12 +52,6 @@ module.exports = class transaction {
         }
         this.items = contract.items || []
         this.hidden = contract.hidden || false
-        if (time && time instanceof Date) {
-          this.time = time
-        } else {
-          throw new Error("Invalid Time")
-        }
-
       }
     }
   }
@@ -70,10 +60,10 @@ module.exports = class transaction {
     var tran = {
       contract: this.contract,
       creditor: this.creditor,
+      debitor: this.debitor,
       amount: this.amount,
       items: this.items,
-      hidden: this.hidden,
-      time: this.time.toUTCString()
+      hidden: this.hidden
     }
     let marsh = ipld.marshal(tran)
     _cache.set(this, ipld.multihash(marsh))

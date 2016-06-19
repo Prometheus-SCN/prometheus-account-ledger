@@ -22,9 +22,6 @@ utility.isTransaction = (transaction) => {
   if (typeof transaction.hidden === 'undefined') {
     return false
   }
-  if (!transaction.time || !(transaction.time instanceof Date && !isNaN(transaction.time.valueOf()))) {
-    return false
-  }
   if (!(typeof transaction.marshal === 'function')) {
     return false
   }
@@ -35,22 +32,37 @@ utility.isTransaction = (transaction) => {
 }
 
 utility.isEntry = (entry) => {
+  if(!entry){
+    return false
+  }
   if (!utility.isTransaction(entry.transaction)) {
     return false
   }
-  if(!entry.id || isNaN(entry.id)){
+  if (!entry.id || isNaN(entry.id)) {
     return false
   }
   if (!(typeof entry.last === 'function')) {
     return false
   }
+  if (!entry.time || !(entry.time instanceof Date && !isNaN(entry.time.valueOf()))) {
+    return false
+  }
   return true
 }
 
-utility.unmarshalTransaction= (transaction) =>{
+utility.isIPLDLink = (link) => {
+
+  if (link && link[ "/" ] != null && typeof link[ "/" ] === "string") {
+    return true
+  } else {
+    return false
+  }
+}
+
+utility.unmarshalTransaction = (transaction) => {
 
 }
-utility.unmarshalEntry= (entry) =>{
+utility.unmarshalEntry = (entry) => {
 
 }
 

@@ -12,7 +12,7 @@ describe("test transaction", () => {
   var time= new Date()
 
   it("transaction creation", () => {
-    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden, time)
+    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
     expect(trans).to.exist
     expect(trans.contract).to.eql(contract)
     expect(trans.creditor).to.eql(creditor)
@@ -20,11 +20,11 @@ describe("test transaction", () => {
     expect(trans.amount).to.eql(amount)
     expect(trans.items).to.eql(items)
     expect(trans.hidden).to.eql(hidden)
-    expect(trans.multihash()).to.eql('QmaYMM4zExZFsgaFAX2stMNAStGpPMhherECoZEuvMf7Xg')
+    expect(trans.multihash()).to.eql('QmdkdjUBSkAnLCUtAVruKcuypTXgxoNY9jG62AHWVMLz2y')
   })
 
   it("transaction creation from json", () => {
-    var trans= new Transaction({contract: contract, creditor: creditor, debitor: debitor, amount: amount, items: items, hidden: hidden, time: time})
+    var trans= new Transaction({contract: contract, creditor: creditor, debitor: debitor, amount: amount, items: items, hidden: hidden})
     expect(trans).to.exist
     expect(trans.contract).to.eql(contract)
     expect(trans.creditor).to.eql(creditor)

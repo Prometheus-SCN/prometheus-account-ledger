@@ -1,26 +1,44 @@
 'use strict'
-const IPLDService = require('ipfs-ipld')
-const promisify = require('promisify-node')
+const IPLDResolver = require('ipfs-ipld').resolve
 const utility = require('./utility')
+const Transaction = require('./transaction')
 let _ipldService = new WeakMap
 module.exports = class transactionService {
-  constructor (blockService) {
-    if (!blockService) {
+  constructor (ipldService) {
+    if (!ipldService) {
       throw new Error("Invalid Block Service")
     }
-    var ipldService = new IPLDService(blockService)
-    _ipldService.set(this, promisify(ipldService))
+    _ipldService.set(this, ipldService)
   }
 
   add (transaction) {
-    if (utility.isTransaction(transaction)){
+    if (!utility.isTransaction(transaction)){
       throw new Error("Invalid Transaction")
     }
-    var ipldService = _ipldService.get(this)
-    return ipldService.add(transaction)
+    let ipldService = _ipldService.get(this)
+    let prom = new Promise((resolve, reject)=>{
+      ipldService.add(transaction.marshal(), (err)=>{
+        if(err){
+          reject(err)
+        } else{
+          resolve(transaction.multihash())
+        }
+      })
+    })
+    return prom
   }
 
   get (multihash) {
-    return ipldService.get(multihash)
+    let ipldService = _ipldService.get(this)
+    let prom = new Promise((resolve, reject)=>{
+      ipldService.get(multihash, (err, transaction)=>{
+        if (err){
+          reject(err)
+        } else {
+          resolve(new Transaction(transaction))
+        }
+      })
+    })
+    return prom
   }
 }

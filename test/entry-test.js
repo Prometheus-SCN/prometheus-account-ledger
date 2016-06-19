@@ -11,12 +11,12 @@ describe("test entry", () => {
   var hidden= false
   var time= new Date("06/14/1997")
   it("test entry creation", ()=>{
-    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden, time)
-    var entry= new Entry(trans)
+    var trans= new Transaction(contract, creditor, debitor, amount, items, hidden)
+    var entry= new Entry(trans, time)
     expect(entry).to.exist
     expect(entry.transaction).to.exist
-    expect(entry.id).to.eql("QmTx63jZzNLE96A2762T7Fb9JPv85r99Av9FRisLJ87uxP")
-    expect(entry.multihash()).to.eql("QmTx63jZzNLE96A2762T7Fb9JPv85r99Av9FRisLJ87uxP")
+    expect(entry.id).to.eql(1)
+    expect(entry.multihash()).to.eql("QmYr7N9yBRPEiBUHy6M4msM6s2xauxsC7uDAbnpo49ptau")
   })
   
 })
