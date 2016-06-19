@@ -10,18 +10,18 @@ module.exports = class entry {
       if (utility.isTransaction(transaction)) {
         this.transaction = transaction
       } else {
-        transaction = arguments[ 0 ][ "transaction" ] || null
-        time = arguments[ 0 ][ "time" ] || null
-        last = arguments[ 0 ][ "last" ] || null
-        id = arguments[ 0 ][ "id" ] || null
+        transaction = arguments[ 0 ][ 'transaction' ] || null
+        time = arguments[ 0 ][ 'time' ] || null
+        last = arguments[ 0 ][ 'last' ] || null
+        id = arguments[ 0 ][ 'id' ] || null
         entryService = arguments[ 1 ] || null
       }
     } else if (arguments.length == 1) {
-      transaction = arguments[ 0 ][ "transaction" ] || null
-      time = arguments[ 0 ][ "time" ] || null
-      last = arguments[ 0 ][ "last" ] || null
-      id = arguments[ 0 ][ "id" ] || null
-      entryService = arguments[ 0 ][ "entryService" ] || null
+      transaction = arguments[ 0 ][ 'transaction' ] || null
+      time = arguments[ 0 ][ 'time' ] || null
+      last = arguments[ 0 ][ 'last' ] || null
+      id = arguments[ 0 ][ 'id' ] || null
+      entryService = arguments[ 0 ][ 'entryService' ] || null
     }
 
     if (entryService) {
@@ -35,7 +35,7 @@ module.exports = class entry {
         if (utility.isIPLDLink(transaction)) {
           if (entryService) {
             let ts = entryService.getTransactionService()
-            ts.get(transaction[ "/" ])
+            ts.get(transaction[ '/' ])
               .then(((transaction)=> {
                 this.transaction = transaction
               }).bind(this))
@@ -43,17 +43,17 @@ module.exports = class entry {
                 throw err
               })
           } else {
-            throw new Error("Entry Service Required for IPLD Links")
+            throw new Error('Entry Service Required for IPLD Links')
           }
         } else {
-          throw new Error("Invalid Transaction")
+          throw new Error('Invalid Transaction')
         }
       }
     }
     if (time && time instanceof Date) {
       this.time = time
     } else {
-      throw new Error("Invalid Time")
+      throw new Error('Invalid Time')
     }
     if (last) {
       let isEntry = utility.isEntry(last)
@@ -67,10 +67,10 @@ module.exports = class entry {
           _last.set(this, last)
           this.id = isEntry ? (last.id + 1) : (id || 1)
         } else {
-          throw new Error("Invalid Last Entry")
+          throw new Error('Invalid Last Entry')
         }
         if (last.time > this.time) {
-          throw new Error("Invalid Entry Transaction Time")
+          throw new Error('Invalid Entry Transaction Time')
         }
       }
     } else {
@@ -85,7 +85,7 @@ module.exports = class entry {
       if (utility.isIPLDLink(last)) {
         let entryService = _entryService.get(this)
         if (entryService) {
-          entryService.get(last[ "/" ])
+          entryService.get(last[ '/' ])
             .then(((entry)=> {
                 _last.set(this, entry)
                 resolve(entry)
@@ -96,7 +96,7 @@ module.exports = class entry {
               reject(err)
             })
         } else {
-          reject(new Error("No Entry Service Defined"))
+          reject(new Error('No Entry Service Defined'))
         }
       } else {
         resolve(last)
@@ -114,8 +114,8 @@ module.exports = class entry {
     }
     var entry = {
       id: this.id,
-      transaction: this.transaction ? (utility.isIPLDLink(this.transaction) ? this.transaction : { "/": this.transaction.multihash() }) : "",
-      last: last ? (utility.isIPLDLink(last) ? last : { "/": last.multihash() }) : "",
+      transaction: this.transaction ? (utility.isIPLDLink(this.transaction) ? this.transaction : { '/': this.transaction.multihash() }) : '',
+      last: last ? (utility.isIPLDLink(last) ? last : { '/': last.multihash() }) : '',
       time: this.time
     }
     let marsh = ipld.marshal(entry)

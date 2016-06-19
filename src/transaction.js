@@ -9,22 +9,22 @@ module.exports = class transaction {
         if (contract.contract) {
           this.contract = contract.contract
         } else {
-          throw new Error("Invalid Contract ID")
+          throw new Error('Invalid Contract ID')
         }
         if (contract.creditor) {
           this.creditor = contract.creditor
         } else {
-          throw new Error("Invalid Creditor")
+          throw new Error('Invalid Creditor')
         }
         if (contract.debitor) {
           this.debitor = contract.debitor
         } else {
-          throw new Error("Invalid Debitor")
+          throw new Error('Invalid Debitor')
         }
         if (contract.amount && !isNaN(contract.amount)) {
           this.amount = contract.amount
         } else {
-          throw new Error("Invalid Amount")
+          throw new Error('Invalid Amount')
         }
         this.items = contract.items || []
         this.hidden = contract.hidden
@@ -33,22 +33,22 @@ module.exports = class transaction {
         if (contract) {
           this.contract = contract
         } else {
-          throw new Error("Invalid Contract Hash")
+          throw new Error('Invalid Contract Hash')
         }
         if (creditor) {
           this.creditor = creditor
         } else {
-          throw new Error("Invalid Creditor Hash")
+          throw new Error('Invalid Creditor Hash')
         }
         if (debitor) {
           this.debitor = debitor
         } else {
-          throw new Error("Invalid Debitor Hash")
+          throw new Error('Invalid Debitor Hash')
         }
         if (amount && !isNaN(amount)) {
           this.amount = amount
         } else {
-          throw new Error("Invalid Amount")
+          throw new Error('Invalid Amount')
         }
         this.items = contract.items || []
         this.hidden = contract.hidden || false
