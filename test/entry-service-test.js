@@ -8,7 +8,7 @@ const IPFSRepo = require('ipfs-repo')
 const fsb = require('fs-blob-store')
 
 describe('test entry service', () => {
-  var repo = new IPFSRepo('./.repo', { stores: fsb })
+  var repo = new IPFSRepo('./test/.repo', { stores: fsb })
   var bs = new BlockService(repo)
   var is = new IPLDService(bs)
   var es = new EntryService(is)
@@ -21,31 +21,25 @@ describe('test entry service', () => {
   var time = new Date('06/14/1997')
   var trans = new Transaction(contract, creditor, debitor, amount, items, hidden)
   var entry = new Entry(trans, time)
-  var get = () => {
-    it('test get', () => {
-      es.get(entry.multhash())
-        .then((ntry) => {
-          expect(ntry.multihash()).to.eql(entry.multihash())
-        })
-        .catch((err) => {
-          expect(err).to.not.exist
-        })
-    })
-  }
-  var add = (resolve) => {
-    it('test add', () => {
-      es.add(entry)
-        .then((hash) => {
-          expect(hash).to.eql(entry.multihash())
-          resolve()
-        })
-        .then(get)
-        .catch((err) => {
-          expect(err).to.not.exist
-          resolve()
-        })
-    })
-  }
 
-  var prom = new Promise(add)
+  it('test get', () => {
+    es.get(entry.multihash())
+      .then((ntry) => {
+        expect(ntry.multihash()).to.eql(entry.multihash())
+      })
+      .catch((err) => {
+        expect(err).to.not.exist
+      })
+  })
+
+  it('test add', () => {
+    es.add(entry)
+      .then((hash) => {
+        expect(hash).to.eql(entry.multihash())
+      })
+      .catch((err) => {
+        expect(err).to.not.exist
+      })
+  })
+
 })

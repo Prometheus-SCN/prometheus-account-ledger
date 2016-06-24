@@ -1,12 +1,14 @@
 'use strict'
 const utility = require('./utility')
 const ipld = require('ipld')
+const EventEmitter = require('events');
 let _last = new WeakMap()
 let _cache = new WeakMap()
 let _entryService = new WeakMap()
 module.exports =
-  class entry {
+  class entry extends EventEmitter {
     constructor (transaction, time, last, id, entryService) {
+      super()
       if (arguments.length === 2) {
         if (utility.isTransaction(transaction)) {
           this.transaction = transaction
@@ -32,14 +34,16 @@ module.exports =
       if (!this.transaction) {
         if (utility.isTransaction(transaction)) {
           this.transaction = transaction
+          this.emit('transaction loaded')
         } else {
           if (utility.isIPLDLink(transaction)) {
             if (entryService) {
               let ts = entryService.getTransactionService()
               ts.get(transaction[ '/' ])
-                .then(((transaction) => {
+                .then((transaction) => {
                   this.transaction = transaction
-                }).bind(this))
+                  this.emit('transaction loaded')
+                })
                 .catch((err) => {
                   throw err
                 })
@@ -66,6 +70,7 @@ module.exports =
         } else {
           if (isEntry || isString) {
             _last.set(this, last)
+            this.emit('last loaded')
             this.id = isEntry ? (last.id + 1) : (id || 1)
           } else {
             throw new Error('Invalid Last Entry')
@@ -88,6 +93,7 @@ module.exports =
             entryService.get(last[ '/' ])
               .then(((entry) => {
                 _last.set(this, entry)
+                this.emit('last loaded')
                 resolve(entry)
               })
                 .bind(this)
@@ -124,9 +130,8 @@ module.exports =
     multihash () {
       if (_cache.has(this)) {
         return _cache.get(this)
-      } else {
-        this.marshal()
-        return _cache.get(this)
       }
+      this.marshal()
+      return _cache.get(this)
     }
 }

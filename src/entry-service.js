@@ -37,7 +37,12 @@ module.exports =
           if (err) {
             reject(err)
           } else {
-            resolve(new Entry(entry, self))
+            var ntry = new Entry(entry, self)
+            ntry.on('transaction loaded',()=>{
+              console.log('happened')
+              resolve(ntry)
+            })
+
           }
         })
       })
