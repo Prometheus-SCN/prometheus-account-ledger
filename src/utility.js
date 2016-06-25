@@ -59,9 +59,4 @@ utility.isIPLDLink = (link) => {
   }
 }
 
-utility.unmarshalTransaction = (transaction) => {
-}
-utility.unmarshalEntry = (entry) => {
-}
-
 module.exports = utility

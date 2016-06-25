@@ -4,7 +4,8 @@
   "description": "Ledger Objects for Prometheus",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "discard": "git reset --hard && git clean -f -d"
   },
   "author": "Vijayee Kulkaa <vijayee.kulkaa@hushmail.com>",
   "license": "GPL3",
